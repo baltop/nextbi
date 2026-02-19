@@ -72,6 +72,7 @@ export default function DashboardClient({ user }: Props) {
     { label: "데이터셋", icon: "M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" },
     { label: "데이터 소스", icon: "M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.193-9.193a4.5 4.5 0 00-6.364 6.364l4.5 4.5a4.5 4.5 0 007.244 1.242" },
     { label: "업로드", icon: "M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" },
+    { label: "인터뷰 업로드", icon: "M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z", href: "/dashboard/interview-upload" },
   ];
 
   const stats = [
@@ -142,14 +143,17 @@ export default function DashboardClient({ user }: Props) {
           ))}
 
           {sidebarOpen && <div className="text-xs font-semibold uppercase tracking-wider px-3 pt-4 py-1" style={{ color: "var(--fg-subtle)", fontSize: "0.6875rem" }}>데이터</div>}
-          {dataItems.map(item => (
-            <button key={item.label}
+          {dataItems.map(item => {
+            const Tag = item.href ? "a" : "button";
+            return (
+              <Tag key={item.label} href={item.href}
                     className="w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-all"
-                    style={{ color: "var(--fg-muted)" }}>
-              <SideIcon d={item.icon} />
-              {sidebarOpen && <span>{item.label}</span>}
-            </button>
-          ))}
+                    style={{ color: "var(--fg-muted)", textDecoration: "none" }}>
+                <SideIcon d={item.icon} />
+                {sidebarOpen && <span>{item.label}</span>}
+              </Tag>
+            );
+          })}
         </nav>
 
         <div className="px-2 py-3 space-y-1" style={{ borderTop: "1px solid var(--border)" }}>
