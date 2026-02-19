@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* ============================================
+   NextBI — Vercel/Linear Inspired Design
+   ============================================ */
+
+@layer base {
+  :root {
+    --font-heading: 'Sora', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --bg: #ffffff;
+    --bg-secondary: #fafafa;
+    --fg: #09090b;
+    --fg-muted: #71717a;
+    --fg-subtle: #a1a1aa;
+    --border: #e4e4e7;
+    --card: #ffffff;
+    --primary: #3b82f6;
+    --accent: #8b5cf6;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --ring: rgba(59,130,246,0.15);
+    --shadow: 0 4px 24px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.08);
+    --input-bg: #fafafa;
+    --dropdown-bg: #ffffff;
+    --minibar-bg: #e4e4e7;
+    --badge-green-bg: rgba(22,163,74,0.08);
+    --badge-green-fg: #16a34a;
+    --badge-green-border: rgba(22,163,74,0.2);
+    --badge-blue-bg: rgba(37,99,235,0.08);
+    --badge-blue-fg: #2563eb;
+    --badge-blue-border: rgba(37,99,235,0.2);
+    --badge-gray-bg: #f4f4f5;
+    --badge-gray-fg: #71717a;
+    --badge-gray-border: #e4e4e7;
+  }
+
+  .dark {
+    --bg: #09090b;
+    --bg-secondary: #18181b;
+    --fg: #fafafa;
+    --fg-muted: #a1a1aa;
+    --fg-subtle: #52525b;
+    --border: #27272a;
+    --card: #09090b;
+    --primary: #3b82f6;
+    --accent: #8b5cf6;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --ring: rgba(59,130,246,0.2);
+    --shadow: 0 4px 24px rgba(0,0,0,0.2);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.5);
+    --input-bg: #09090b;
+    --dropdown-bg: #18181b;
+    --minibar-bg: #27272a;
+    --badge-green-bg: rgba(34,197,94,0.1);
+    --badge-green-fg: #4ade80;
+    --badge-green-border: rgba(34,197,94,0.2);
+    --badge-blue-bg: rgba(59,130,246,0.1);
+    --badge-blue-fg: #60a5fa;
+    --badge-blue-border: rgba(59,130,246,0.2);
+    --badge-gray-bg: #18181b;
+    --badge-gray-fg: #a1a1aa;
+    --badge-gray-border: #27272a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  /* 스크롤바 */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Autofill */
+  .dark input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #09090b inset !important;
+    -webkit-text-fill-color: #fafafa !important;
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #fafafa inset !important;
+    -webkit-text-fill-color: #09090b !important;
+  }
+}
