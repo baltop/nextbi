@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/session";
-import { chatStream, isGeminiAvailable } from "@/lib/gemini";
+import { chatStream, isAnthropicAvailable } from "@/lib/anthropic";
+import type { MessageParam } from "@anthropic-ai/sdk/resources/messages";
 
 const SYSTEM_PROMPT =
   "You are NextBI AI Assistant — a helpful data analysis and BI (Business Intelligence) expert. " +
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  if (!isGeminiAvailable()) {
+  if (!isAnthropicAvailable()) {
     return NextResponse.json(
       { error: "AI service is not configured" },
       { status: 503 }
@@ -30,20 +31,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const geminiHistory = [
-      { role: "user" as const, parts: [{ text: SYSTEM_PROMPT }] },
-      { role: "model" as const, parts: [{ text: "네, NextBI AI 어시스턴트로서 데이터 분석과 BI 관련 질문에 답변하겠습니다." }] },
+    const messages: MessageParam[] = [
       ...history.map((h: { role: string; content: string }) => ({
-        role: h.role === "user" ? ("user" as const) : ("model" as const),
-        parts: [{ text: h.content }],
+        role: (h.role === "user" ? "user" : "assistant") as "user" | "assistant",
+        content: h.content,
       })),
+      { role: "user" as const, content: message },
     ];
 
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          for await (const chunk of chatStream(geminiHistory, message)) {
+          for await (const chunk of chatStream(messages, SYSTEM_PROMPT)) {
             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: chunk })}\n\n`));
           }
           controller.enqueue(encoder.encode("data: [DONE]\n\n"));
