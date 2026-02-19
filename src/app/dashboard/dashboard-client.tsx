@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import AiChat from "./ai-chat";
 
 interface Props {
   user: { id: number; email: string; name: string };
@@ -326,6 +327,7 @@ export default function DashboardClient({ user }: Props) {
           </div>
         </div>
       </main>
+      <AiChat />
     </div>
   );
 }
